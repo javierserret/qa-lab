@@ -25,6 +25,15 @@ pipeline {
             }
         }
 
+        stage('Run API tests') {
+            steps {
+                dir ('automation/postman') {
+                    sh 'npm ci'
+                    sh 'npm test -- --env-var baseUrl=http://backend-api:3001'
+                }
+            }
+        }
+
         stage('Run Playwright tests') {
             steps {
                 dir ('automation/playwright') {
@@ -50,7 +59,8 @@ pipeline {
 
     post {
         always {
-            junit testResults: 'automation/appium/test-results/junit/*.xml,automation/playwright/test-results/results.xml'
+            junit testResults: 'automation/appium/test-results/junit/*.xml,automation/playwright/test-results/results.xml,automation/postman/test-results/results.xml'
+            archiveArtifacts artifacts: 'automation/postman/test-results/**', allowEmptyArchive: true
             archiveArtifacts artifacts: 'automation/playwright/playwright-report/**', allowEmptyArchive: true
             archiveArtifacts artifacts: 'automation/playwright/test-results/**', allowEmptyArchive: true
             archiveArtifacts artifacts: 'automation/appium/test-results/**', allowEmptyArchive: true

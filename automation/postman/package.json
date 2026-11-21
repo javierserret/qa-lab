@@ -1,0 +1,11 @@
+{
+  "name": "qa-lab-api-tests",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "newman run qa-lab.postman_collection.json -e test_env.postman_environment.json --reporters cli,junit --reporter-junit-export test-results/results.xml --timeout-request 10000"
+  },
+  "devDependencies": {
+    "newman": "6.2.3"
+  }
+}
