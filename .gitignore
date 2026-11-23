@@ -6,3 +6,6 @@ coverage/
 playwright-report/
 test-results/
 .DS_Store
+ci-artifacts/
+.ci-avd/
+android-source/
