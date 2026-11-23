@@ -63,6 +63,9 @@ export const config: WebdriverIO.Config = {
         // Native Android app capabilities; the emulator must already be running.
         platformName: 'Android',
         'appium:automationName': 'UiAutomator2',
+        ...(process.env.ANDROID_APP_WAIT_ACTIVITY
+            ? { 'appium:appWaitActivity': process.env.ANDROID_APP_WAIT_ACTIVITY }
+            : {}),
         'appium:deviceName': 'Android Emulator',
         ...(process.env.ANDROID_UDID ? { 'appium:udid': process.env.ANDROID_UDID } : {}),
         'appium:app': process.env.ANDROID_APP_PATH || path.resolve('./apks/Android-MyDemoAppRN.1.3.0.build-244.apk'),

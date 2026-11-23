@@ -23,6 +23,23 @@ WebdriverIO starts and stops Appium through its Appium service. Do not start a s
 
 ## Read the exercise
 
+### Native Android demo APK
+
+To test a locally built native app instead of the bundled React Native APK,
+use the same Node/Java/SDK setup above, leave `APPIUM_HOST` unset, and run:
+
+```sh
+ANDROID_UDID=emulator-5554 \
+ANDROID_APP_PATH=/Users/xavier/Development/my-demo-app-android/app/build/outputs/apk/debug/app-debug.apk \
+ANDROID_APP_WAIT_ACTIVITY='com.saucelabs.mydemoapp.android.view.activities.*' \
+npm test
+```
+
+The screen object detects the foreground package after startup and selects
+native or React Native locators. The native catalog opens product details
+through the product image, not the title. Session creation launches the
+chosen APK; tests must not activate a hardcoded React Native package.
+
 - `wdio.conf.ts`: capabilities select Android, UiAutomator2, and the APK. `noReset:false` resets application data when creating sessions.
 - `test/screens/store.screen.ts`: reusable native locators and screen actions.
 - `test/specs/test.e2e.ts`: catalog, add-to-cart, and remove-from-cart assertions. Each test starts a new session so cart state cannot leak.

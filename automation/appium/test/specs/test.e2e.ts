@@ -5,7 +5,8 @@ describe('Android shopping flow', () => {
     beforeEach(async () => {
         // A new session with noReset:false clears app state between tests.
         await browser.reloadSession();
-        await browser.activateApp('com.saucelabs.mydemoapp.rn');
+        // Session creation launches the APK selected by ANDROID_APP_PATH.
+        // Do not activate a fixed package: the native and RN apps can coexist.
         await Store.waitForProducts();
     });
 
